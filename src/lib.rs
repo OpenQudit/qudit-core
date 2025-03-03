@@ -1,14 +1,37 @@
-pub fn add(left: usize, right: usize) -> usize {
-    left + right
-}
+#![warn(missing_docs)]
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+//! Qudit-Core is the core package in the OpenQudit library.
+mod radices;
+mod scalar;
+mod system;
+mod function;
+mod radix;
+mod perm;
+mod bitwidth;
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
-}
+pub mod accel;
+pub mod matrix;
+pub mod memory;
+pub mod unitary;
+
+pub use radices::QuditRadices;
+pub use radices::ToRadices;
+pub use radix::ToRadix;
+pub use scalar::ComplexScalar;
+pub use scalar::RealScalar;
+pub use system::QuditSystem;
+pub use system::HybridSystem;
+pub use system::ClassicalSystem;
+pub use function::HasBounds;
+pub use function::HasPeriods;
+pub use function::HasParams;
+pub use perm::QuditPermutation;
+pub use perm::calc_index_permutation;
+pub use bitwidth::BitWidthConvertible;
+
+////////////////////////////////////////////////////////////////////////
+/// Complex number types.
+////////////////////////////////////////////////////////////////////////
+pub use faer::c32;
+pub use faer::c64;
+////////////////////////////////////////////////////////////////////////
