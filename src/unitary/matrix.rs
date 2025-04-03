@@ -8,6 +8,7 @@ use std::ops::Sub;
 use faer::mat::AsMatRef;
 use faer::zip;
 use faer::unzip;
+use num::Integer;
 use num_traits::Float;
 use coe::{is_same, coerce_static};
 
@@ -631,6 +632,14 @@ impl<C: ComplexScalar> PartialEq<UnitaryMatrix<C>> for UnitaryMatrix<C> {
 
 impl<C: ComplexScalar> PartialEq<Mat<C>> for UnitaryMatrix<C> {
     fn eq(&self, other: &Mat<C>) -> bool { self.matrix == *other }
+}
+
+impl<C: ComplexScalar> PartialEq<Mat<i32>> for UnitaryMatrix<C> {
+    fn eq(&self, other: &Mat<i32>) -> bool {
+        self.matrix.nrows() == other.nrows()
+        && self.matrix.ncols() == other.ncols()
+        && self.matrix.col_iter().zip(other.col_iter()).all(|(a, b)| a.iter().zip(b.iter()).all(|(a, b)| *a == C::from_i32(*b)))
+    }
 }
 
 impl<C: ComplexScalar> Eq for UnitaryMatrix<C> {}

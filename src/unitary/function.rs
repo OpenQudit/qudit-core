@@ -33,9 +33,9 @@ pub trait UnitaryFn<C: ComplexScalar>: QuditSystem + HasParams {
     /// A `UnitaryMatrix` object that encapsulates the generated unitary matrix along with the
     /// radices (dimensions) of the qudits in the quantum system.
     #[inline]
-    fn get_unitary(&self, params: &[C::R]) -> UnitaryMatrix<C> {
+    fn get_unitary(&self, params: impl AsRef<[C::R]>) -> UnitaryMatrix<C> {
         let mut utry = Mat::identity(self.dimension(), self.dimension());
-        self.write_unitary(params, utry.as_mut());
+        self.write_unitary(params.as_ref(), utry.as_mut());
         UnitaryMatrix::new(self.radices(), utry)
     }
 

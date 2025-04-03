@@ -16,6 +16,7 @@ use num_traits::NumOps;
 use num::bigint::BigInt;
 use num::rational::Ratio;
 use num::ToPrimitive;
+use num::Zero;
 
 use crate::bitwidth::BitWidthConvertible;
 
@@ -93,6 +94,7 @@ pub trait ComplexScalar:
     // /// Compute the inverse of the complex number.
     fn inv(self) -> Self;
 
+    // TODO: re-evaluate names: from_componenets, from_real?
     /// Construct a complex number from two real numbers.
     fn complex(re: impl RealScalar, im: impl RealScalar) -> Self;
 
@@ -101,6 +103,14 @@ pub trait ComplexScalar:
 
     /// Generate a random scalar from the standard normal distribution. 
     fn standard_random() -> Self;
+
+    fn from_f32(re: f32) -> Self {
+        Self::complex(re, Self::R::zero())
+    }
+
+    fn from_i32(re: i32) -> Self {
+        Self::complex(re as f32, Self::R::zero()) 
+    }
 }
 
 impl ComplexScalar for c32 {
@@ -254,3 +264,4 @@ impl RealScalar for f64 {
         r.to_f64().expect("Failed to convert Rational to f64")
     }
 }
+
