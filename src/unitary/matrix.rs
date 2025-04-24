@@ -8,11 +8,9 @@ use std::ops::Sub;
 use faer::mat::AsMatRef;
 use faer::zip;
 use faer::unzip;
-use num::Integer;
 use num_traits::Float;
 use coe::{is_same, coerce_static};
 
-use crate::accel::kron_sq_unchecked;
 use crate::c32;
 use crate::c64;
 use crate::ComplexScalar;
@@ -707,6 +705,21 @@ mod test {
     use super::*;
 
     impl<C: ComplexScalar> UnitaryMatrix<C> {
+        /// Checks if the unitary matrix is close to another unitary matrix.
+        ///
+        /// # Arguments
+        ///
+        /// * `x` - The other unitary matrix to compare to.
+        ///
+        /// # Notes
+        /// 
+        /// This is a global-phase-agnostic check. It uses the
+        /// `get_distance_from` method to calculate the distance
+        /// between the two matrices.
+        ///
+        /// # See Also
+        ///
+        /// * [UnitaryMatrix::get_distance_from] - The method used to calculate the distance.
         pub fn assert_close_to(&self, x: impl AsMatRef<T=C, Rows=usize, Cols=usize>) {
             let dist = self.get_distance_from(x);
             assert!(

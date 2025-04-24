@@ -37,6 +37,7 @@ pub trait RealScalar:
     /// Generate a random scalar from the standard normal distribution. 
     fn standard_random() -> Self;
 
+    /// Convert a rational number to the real number type.
     fn from_rational(r: &Ratio<BigInt>) -> Self;
 }
 
@@ -91,7 +92,7 @@ pub trait ComplexScalar:
     // /// Construct the complex conjugate of the complex number.
     // fn conj(self) -> Self;
 
-    // /// Compute the inverse of the complex number.
+    /// Compute the inverse of the complex number.
     fn inv(self) -> Self;
 
     // TODO: re-evaluate names: from_componenets, from_real?
@@ -104,10 +105,12 @@ pub trait ComplexScalar:
     /// Generate a random scalar from the standard normal distribution. 
     fn standard_random() -> Self;
 
+    /// Construct a complex number from a float number.
     fn from_f32(re: f32) -> Self {
         Self::complex(re, Self::R::zero())
     }
 
+    /// Construct a complex number from a integer number.
     fn from_i32(re: i32) -> Self {
         Self::complex(re as f32, Self::R::zero()) 
     }
